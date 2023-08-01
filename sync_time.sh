@@ -1,4 +1,6 @@
 #!/bin/bash
+# Created by Frizkyiman
+# Github https://github.com/frizkyiman/
 
 convert_month_to_number() {
     case "$1" in
