@@ -41,8 +41,6 @@ sync_time_with_curl() {
 }
 
 default_url=${1:-"google.com"}
-echo "Use default settings: $default_url"
-
 sync_time_with_curl "$default_url"
 
 cleanup() {
