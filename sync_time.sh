@@ -42,8 +42,19 @@ sync_time_with_curl() {
     fi
 }
 
-default_url=${1:-"google.com"}
-sync_time_with_curl "$default_url"
+wait_for_internet() {
+    echo "Check internet connection..."
+    while ! ping -c 1 google.com > /dev/null 2>&1; do
+        sleep 1
+    done
+    echo "Internet connection available."
+}
+
+url=${1:-"google.com"}
+
+wait_for_internet
+
+sync_time_with_curl "$url"
 
 cleanup() {
     unset curl_output
