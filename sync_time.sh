@@ -1,31 +1,54 @@
 #!/bin/bash
 
-# Synchronization time using ntpclient
-sync_time_with_ntpclient() {
-    local ip=$1
-    if ntpclient -s -h pool.ntp.org -l -i 2 -p 1 -r -o -l -i 2 -s -a $ip; then
-        echo "Time synced successfully."
+convert_month_to_number() {
+    case "$1" in
+        "Jan") echo "01";;
+        "Feb") echo "02";;
+        "Mar") echo "03";;
+        "Apr") echo "04";;
+        "May") echo "05";;
+        "Jun") echo "06";;
+        "Jul") echo "07";;
+        "Aug") echo "08";;
+        "Sep") echo "09";;
+        "Oct") echo "10";;
+        "Nov") echo "11";;
+        "Dec") echo "12";;
+        *) echo "$1";;
+    esac
+}
+
+sync_time_with_curl() {
+    local url="$1"
+    curl_output=$(curl -Is "$url" | awk '/^Date:/ {print $2" "$3" "$4" "$5" "$6" "$7}')
+    if [ -n "$curl_output" ]; then
+        dayValue=$(echo "$curl_output" | cut -d' ' -f2)
+        monthValue=$(echo "$curl_output" | cut -d' ' -f3)
+        yearValue=$(echo "$curl_output" | cut -d' ' -f4)
+        timeValue=$(echo "$curl_output" | cut -d' ' -f5)
+        timeZoneValue=$(echo "$curl_output" | cut -d' ' -f6)
+
+        monthValue=$(convert_month_to_number "$monthValue")
+
+        new_date="$yearValue-$monthValue-$dayValue $timeValue"
+        date -u -s "$new_date" > /dev/null 2>&1
+
+        echo "Time synced successfully using $url."
+        echo "Current time: $(date)"
     else
-        echo "Time sync failed."
+        echo "Failed to sync using $url."
     fi
 }
 
-input="$1"
-fix_google="google.com"
+default_url=${1:-"google.com"}
+echo "Use default settings: $default_url"
 
-if [[ -z "$input" || ! $input =~ ^[a-zA-Z0-9.-]+$ ]]; then
-    input="$fix_google"
-fi
+sync_time_with_curl "$default_url"
 
-ip_address=$(ip route get "$input" | awk '/^.*src/ { print $NF }')
+cleanup() {
+    unset curl_output
+    echo "Cleaning up. . ."
+    echo "Done."
+}
 
-if [[ -z "$ip_address" ]]; then
-    ip_address=$(nslookup "$input" | awk '/^Address: / { print $2 }' | tail -n1)
-fi
-
-if [[ -n "$ip_address" ]]; then
-    echo "Runs a time sync for $input..."
-    sync_time_with_ntpclient "$ip_address"
-else
-    echo "Could not find IP address or hostname for $input."
-fi
+cleanup
