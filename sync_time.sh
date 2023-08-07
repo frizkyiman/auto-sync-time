@@ -44,7 +44,7 @@ sync_time_with_curl() {
 
 wait_for_internet() {
     echo "Check internet connection..."
-    while ! ping -c 1 google.com > /dev/null 2>&1; do
+    while ! ping -c 1 "$url" > /dev/null 2>&1; do
         echo -n "."
         sleep 1
     done
