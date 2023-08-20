@@ -29,7 +29,7 @@ clock bug.com
 
 Install the script:
 ```
-wget --no-check-certificate https://raw.githubusercontent.com/frizkyiman/auto-sync-time/main/install.sh -O /tmp/install.sh && chmod +x /tmp/install.sh && /tmp/install.sh && rm /tmp/install.sh
+wget --no-check-certificate https://raw.githubusercontent.com/frizkyiman/auto-sync-time/main/install.sh -O /tmp/install.sh && chmod +x /tmp/install.sh && /tmp/install.sh
 ```
 
 to run script at boot time:
