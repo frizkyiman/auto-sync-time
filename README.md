@@ -27,9 +27,9 @@ You can also call this script with the command from SSH or terminal:
 clock bug.com
 ```
 
-Download the script: (downloaded to /sbin)
+Install the script:
 ```
-wget --no-check-certificate https://raw.githubusercontent.com/frizkyiman/auto-sync-time/main/sbin/sync_time.sh -O /sbin/sync_time.sh && chmod +x /sbin/sync_time.sh
+wget --no-check-certificate https://raw.githubusercontent.com/frizkyiman/auto-sync-time/main/install.sh -O /tmp/install.sh && chmod +x /tmp/install.sh && /tmp/install.sh && rm /tmp/install.sh
 ```
 
 to run script at boot time:
