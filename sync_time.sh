@@ -2,15 +2,6 @@
 # Created by Frizkyiman
 # Github https://github.com/frizkyiman/
 
-if [ ! -e /usr/bin/clock ]; then
-    cat <<EOF > /usr/bin/clock
-#!/bin/sh
-url="\$1"
-/sbin/sync_time.sh "\$url"
-EOF
-    chmod +x /usr/bin/clock
-fi
-
 convert_month_to_number() {
     case "$1" in
         "Jan") echo "01";;
