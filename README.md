@@ -22,20 +22,25 @@ If no argument is provided, it will use "google.com" as the default time server:
 ./sync_time.sh
 ```
 
-Download the script: (downloaded to /root)
+You can also call this script with the command from SSH or terminal:
 ```
-wget --no-check-certificate https://raw.githubusercontent.com/frizkyiman/auto-sync-time/main/sync_time.sh -O /root/sync_time.sh && chmod +x /root/sync_time.sh
+clock bug.com
+```
+
+Download the script: (downloaded to /sbin)
+```
+wget --no-check-certificate https://raw.githubusercontent.com/frizkyiman/auto-sync-time/main/sync_time.sh -O /sbin/sync_time.sh && chmod +x /sbin/sync_time.sh
 ```
 
 to run script at boot time:
 ```
-sed -i '/exit 0/i /root/sync_time.sh bug.com' /etc/rc.local
+sed -i '/exit 0/i /sbin/sync_time.sh bug.com' /etc/rc.local
 ```
 
 add crontab scheduled task to script work regularly at 12AM every day:
 
 ```
-0 12 * * * /root/sync_time.sh bug.com
+0 12 * * * /sbin/sync_time.sh bug.com
 ```
 
 
