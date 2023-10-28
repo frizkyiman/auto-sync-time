@@ -13,13 +13,13 @@ Features:
 Usage:
 To synchronize the system time, simply run the script in the terminal and provide the provided bug URL or IP address as an argument. For example:
 ```
-./sync_time.sh bug.com
+/sbin/sync_time.sh bug.com
 
 ```
 
 If no argument is provided, it will use "google.com" as the default time server:
 ```
-./sync_time.sh
+/sbin/sync_time.sh
 ```
 
 You can also call this script with the command from SSH or terminal:
